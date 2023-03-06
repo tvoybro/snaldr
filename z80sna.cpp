@@ -172,15 +172,18 @@ void idaapi load_file(linput_t *li, ushort /*neflag*/, const char * /*fileformat
 	// Add stack comment (program)
 	add_pgm_cmt("Stack Ptr   : 0x%X", _hdr.r_SP);
 
-	// Add pages info
-	add_pgm_cmt("Screen page : %d", videobank);
-	add_pgm_cmt("High page   : %d", high16k_bank);
+	// SNA 128 info
+	if (pages) {
+		// Add pages info
+		add_pgm_cmt("Screen page : %d", videobank);
+		add_pgm_cmt("High page   : %d", high16k_bank);
 
-	char bank_info[32];
-	// Add bank comments
-	add_extra_cmt(0x8000, 1, "Fixed bank, page 2 mapped");
-	qsnprintf(bank_info, 32, "High memory bank, page %i mapped", high16k_bank);
-	add_extra_cmt(0xC000, 1, bank_info);
+		char bank_info[32];
+		// Add bank comments
+		add_extra_cmt(0x8000, 1, "Fixed bank, page 2 mapped");
+		qsnprintf(bank_info, 32, "High memory bank, page %i mapped", high16k_bank);
+		add_extra_cmt(0xC000, 1, bank_info);
+	}
 }
 
 //----------------------------------------------------------------------
